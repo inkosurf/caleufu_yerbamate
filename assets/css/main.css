@@ -225,7 +225,7 @@ h6 {
 .header2 {
   color: var(--default-color);
   background-color: var(--background-color);
-  padding-left: 35px;
+  padding-left: 50px;
   transition: all 0.5s;
   z-index: 996;
 }
