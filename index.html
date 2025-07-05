@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Caleufu Yerbas Agroecologicas</title>
-  <link rel="stylesheet" href="assets/css/style2.css">
+  <link rel="stylesheet" href="assets/css/style5.css">
  
   <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Roboto+Slab&family=Noto+Sans&display=swap" rel="stylesheet">
   <link
@@ -57,7 +57,7 @@
   <div class="imagenes-container" id="productos-container">
     <p>Cargando productos...</p>
   </div>
-
+</section>
 
   <section class="equipo">
     <div class="container">
@@ -137,7 +137,7 @@
   
   
 <script>
-  fetch("https://script.google.com/macros/s/AKfycbwF0kXDEu4PokKOSTQtCdgcNciHitFUc3rHVp9I98gxj08wwPUOV1zpKpslyKcLvCdQ0g/exec")
+  fetch("https://script.google.com/macros/s/AKfycbysr3cf0RpAqyVasrNcz8wimIjPTXmxnj8bLgixqNM28So5Y2hR4JalsjPRROpdq-qd0g/exec")
     .then(res => res.json())
     .then(lista => {
       const container = document.getElementById("productos-container");
@@ -145,7 +145,7 @@
 
       lista.forEach(fila => {
         // Validación mínima por si alguna fila viene vacía o incompleta
-        if (fila.length < 5) return;
+        if (fila.length < 6) return;
 
         const tarjeta = document.createElement("div");
         tarjeta.className = "tarjeta";
@@ -154,7 +154,7 @@
             <div class="tarjeta-front">
               <img src="${fila[0]}" alt="Frente" />
 			  <div class="contenido-front"><h3>${fila[2]}</h3>
-			  </div>
+			  </div> 
             </div>
             <div class="tarjeta-back">
               <img class="fondo" src="${fila[1]}" alt="Reverso" />

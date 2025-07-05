@@ -29,6 +29,7 @@ img {
   display: block;
 }
 
+/* ===== RESET GENERAL DE ESTRUCTURA ===== */
 .container {
   max-width: 1200px;
   margin: auto;
@@ -235,48 +236,31 @@ header {
       }
     }
 
+/* ===== TARJETAS VISUALES ===== */
 
 .imagenes-container {
-	margin-top: 40px;
-		margin-bottom: 40px;
+  margin: 40px auto;
   display: flex;
-  gap: 30px; /* aumenta el espacio entre tarjetas */
-  max-width: 1300px;
-  height: 300px; /* o lo que necesites para que entren bien */
+  gap: 30px;
+  flex-wrap: wrap;
   justify-content: center;
-  flex-wrap: nowrap; /* que no hagan wrap */
+  max-width: 1300px;
 }
 
 .tarjeta {
-  flex: 0 0 190px; /* tamaño fijo para que no se reduzca */
-  max-width: 420px;
-  aspect-ratio: 3 / 4;
+  width: 100%;
+  max-width: 280px;
+  aspect-ratio: 3/4;
   perspective: 1000px;
+  position: relative;
 }
-
-
-
-/* Media query para móviles: apilar */
-@media (max-width: 768px) {
-  .imagenes-container {
-    flex-direction: column;
-    flex-wrap: nowrap;
-    gap: 30px;
-  }
-
-  .tarjeta {
-    width: 100%;
-    max-width: 100%;
-  }
-}
-
 
 .tarjeta-inner {
   width: 100%;
   height: 100%;
-  position: relative;
   transition: transform 0.6s;
   transform-style: preserve-3d;
+  position: relative;
 }
 
 .tarjeta:hover .tarjeta-inner {
@@ -288,269 +272,117 @@ header {
   position: absolute;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
   backface-visibility: hidden;
   border-radius: 10px;
   overflow: hidden;
+  top: 0;
+  left: 0;
 }
 
 .tarjeta-front {
   z-index: 2;
+  background: #000;
 }
 
 .tarjeta-front img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
 }
-.tarjeta-front .contenido {
-  position: relative;
-  z-index: 1;
-  background: rgba(0, 0, 0, 0); /* sin fondo */
-  padding: 1rem;
-  text-align: center;
-  color: white; /* color de texto blanco */
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8); /* sombra negra suave */
-}
+
 .tarjeta-front .contenido-front {
   position: absolute;
-  top: 40px; /* o ajustalo según quieras la posición vertical */
-  left: 0;
+  top: 40px;
   width: 100%;
-  padding: 1rem;
-  color: white;
   text-align: center;
-  text-shadow: 0 0 8px rgba(0,0,0,0.8);
-  z-index: 2;
-  pointer-events: none;
-}
-
-
-
-.tarjeta-front .contenido h3 {
   color: white;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
-}
-
-.contenido-front {
-  
   text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
-  
-  z-index: 2;
-  
-   position: relative;
-
-
-  padding: 1rem;
-  text-align: center;
+  z-index: 3;
 }
-
-
-
-
-
 
 .tarjeta-back {
   transform: rotateY(180deg);
-  z-index: 1;
   background-color: #111;
   color: white;
-  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 1rem;
 }
 
 .tarjeta-back .fondo {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   object-fit: cover;
   z-index: 0;
 }
 
 .tarjeta-back .contenido {
   position: relative;
-  z-index: 1;
   background: rgba(0, 0, 0, 0.5);
+  z-index: 2;
   padding: 1rem;
   text-align: center;
 }
 
 .boton {
   margin-top: 1rem;
-  width: 100%;
   padding: 0.75rem;
   border: none;
+  width: 100%;
   background: rgba(255, 255, 255, 0.9);
   color: #111;
   font-weight: bold;
-  cursor: pointer;
-  z-index: 1;
   border-radius: 5px;
-}
-
-@media (max-width: 768px) {
-  .imagenes-container {
-    flex-direction: column;
-    gap: 30px;
-  }
-
-  .tarjeta {
-    width: 100%;
-  }
-}
-
-/* ===== DESTACADOS ===== */
-
-.destacados {
-  padding: 4rem 0;
-}
-
-.card {
-  background: #f9f9f9;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-  text-align: center;
-}
-
-.card img {
-  border-radius: 8px;
-  opacity: 0.9;
-}
-
-.card h2,
-.card h3 {
-  font-family: var(--heading-font);
-  margin: 0.5rem 0;
-}
-
-.card-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.card-grid .card {
-  flex: 1 1 calc(50% - 1rem);
-}
-
-/* ===== EQUIPO ===== */
-.equipo {
-  padding: 4rem 0;
-  background: #f0f0f0;
-}
-
-.team-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: center;
-}
-
-.member {
-  flex: 1 1 250px;
-  background: white;
-  border-radius: 8px;
-  padding: 1rem;
-  text-align: center;
-}
-
-.member img {
-  border-radius: 50%;
-  margin-bottom: 1rem;
-}
-
-/* ===== PUBLICACIONES / CARDS ===== */
-.cards {
-  padding: 4rem 0;
-}
-
-.section-header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.section-header .line {
-  width: 40px;
-  height: 4px;
-  background: var(--color-naranja);
-  margin: 0.5rem auto;
-}
-
-.card-grid-4 {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.card-grid-4 .card {
-  flex: 1 1 calc(25% - 1rem);
-}
-
-.card-grid-4 h4 {
-  font-family: var(--heading-font);
-  margin: 0.5rem 0;
+  cursor: pointer;
 }
 
 /* ===== MEDIA QUERIES ===== */
-@media (max-width: 768px) {
-  .hero2 .container,
-  .card-grid,
-  .team-grid,
-  .card-grid-4 {
-    flex-direction: column;
-  }
 
+@media (max-width: 768px) {
   header {
-    flex-direction: column;
-    height: auto; /* para que crezca si es necesario */
     padding: 0.5rem;
   }
 
-  .logo {
-    width: 100%;
-    justify-content: center;
-    margin-bottom: 1rem;
+  .logo img {
+    height: 150px;
   }
 
-  .logo img {
-    height: 150px; /* ajustar tamaño imagen en móvil */
-    margin-right: 0;
+ .header .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .logo {
+    justify-content: center;
+    margin-bottom: 0.5rem;
   }
 
   .nav {
-    width: 100%;
-    flex-wrap: wrap;
     justify-content: center;
+    flex-wrap: wrap;
     overflow: visible;
+    margin-top: 0; /* evita separación innecesaria */
   }
 
   .nav a {
-    display: inline-block;
-    font-size: 18px;
-    padding: 0.5rem 1rem;
-    margin: 0.3rem 0.3rem;
-    white-space: normal; /* permite que el texto se ajuste */
-    box-sizing: border-box;
+    font-size: 16px;
+    padding: 0.5rem 0.75rem;
   }
-  .hero {
 
-  margin-top: 90px; /* debe coincidir con la altura del header */
-  
+  .imagenes-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tarjeta {
+    max-width: 90%;
+  }
 }
 
-}
 @media (max-width: 1068px) {
-	
-	  .hero2 {
-
-  margin-top: 90px; /* debe coincidir con la altura del header */
-  
-}}
+  .hero2 {
+    margin-top: 90px;
+  }
+}
