@@ -180,9 +180,7 @@ function inViewObserver(className) {
 inViewObserver('fade-up-on-scroll');
 inViewObserver('fade-zoom-on-scroll');
 </script>
-<script>// REEMPLAZA el último script de Google Sheets con este script de Firebase
-// (El que empieza con fetch("https://script.google.com/macros/s/AKfycby0loQ0..."))
-
+<script type="module">
 // === IMPORTS FIREBASE ===
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
 import { getFirestore, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
@@ -202,40 +200,32 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// === FUNCIÓN PARA CARGAR PUBLICACIONES DESDE FIREBASE ===
+// === CARGAR PUBLICACIONES ===
 async function cargarPublicacionesFirebase() {
   try {
     console.log("🔥 Cargando publicaciones desde Firebase...");
     
     const container = document.querySelector(".publicaciones-container");
     if (!container) {
-      console.error("❌ No se encontró el contenedor .publicaciones-container");
+      console.error("❌ No se encontró el contenedor");
       return;
     }
 
-    // Mostrar loading
     container.innerHTML = "<p>Cargando publicaciones desde Firebase...</p>";
 
-    // Consultar Firestore (ordenadas por fecha, más recientes primero)
     const q = query(collection(db, "publicaciones"), orderBy("fecha", "desc"));
     const querySnapshot = await getDocs(q);
 
-    // Limpiar container
     container.innerHTML = '';
 
     if (querySnapshot.empty) {
       container.innerHTML = '<p style="text-align: center;">No hay publicaciones aún.</p>';
-      console.log("📝 No hay publicaciones en Firestore");
       return;
     }
 
-    console.log(`📦 Se encontraron ${querySnapshot.size} publicaciones`);
-
-    // Crear cards dinámicamente
-    querySnapshot.forEach((doc, index) => {
+    querySnapshot.forEach((doc) => {
       const data = doc.data();
       
-      // Formatear fecha
       let dia = "", mes = "", anio = "";
       if (data.fecha) {
         const fecha = data.fecha.toDate();
@@ -263,7 +253,7 @@ async function cargarPublicacionesFirebase() {
                   <button class="publicacion-button">Ver publicación</button>
                 </a>
               ` : `
-                <button class="publicacion-button" style="opacity: 0.5; cursor: not-allowed;" disabled>Sin enlace</button>
+                <button class="publicacion-button" style="opacity: 0.5;" disabled>Sin enlace</button>
               `}
             </div>
           </div>
@@ -272,19 +262,20 @@ async function cargarPublicacionesFirebase() {
       container.appendChild(tarjeta);
     });
 
-    console.log(`✅ ${querySnapshot.size} publicaciones cargadas desde Firebase`);
+    console.log("✅ Publicaciones cargadas desde Firebase");
     
   } catch (error) {
-    console.error("❌ Error al cargar publicaciones desde Firebase:", error);
+    console.error("❌ Error:", error);
     const container = document.querySelector(".publicaciones-container");
     if (container) {
-      container.innerHTML = '<p style="color: red; text-align: center;">Error al cargar publicaciones desde Firebase.</p>';
+      container.innerHTML = '<p style="color: red;">Error al cargar publicaciones.</p>';
     }
   }
 }
 
-// === EJECUTAR AL CARGAR LA PÁGINA ===
-document.addEventListener('DOMContentLoaded', cargarPublicacionesFirebase);</script>
+// === EJECUTAR ===
+cargarPublicacionesFirebase();
+</script>
 
 
 </body>
