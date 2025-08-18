@@ -183,7 +183,7 @@ inViewObserver('fade-zoom-on-scroll');
 <script type="module">
 // === IMPORTS FIREBASE ===
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-import { getFirestore, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+import { getFirestore, collection, getDocs, orderBy, query, limit } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
 
 // === CONFIGURACIÓN FIREBASE ===
 const firebaseConfig = {
@@ -200,10 +200,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// === CARGAR PUBLICACIONES ===
+// === CARGAR SOLO LAS 3 PUBLICACIONES MÁS RECIENTES ===
 async function cargarPublicacionesFirebase() {
   try {
-    console.log("🔥 Cargando publicaciones desde Firebase...");
+    console.log("🔥 Cargando las 3 publicaciones más recientes...");
     
     const container = document.querySelector(".publicaciones-container");
     if (!container) {
@@ -213,7 +213,8 @@ async function cargarPublicacionesFirebase() {
 
     container.innerHTML = "<p>Cargando publicaciones desde Firebase...</p>";
 
-    const q = query(collection(db, "publicaciones"), orderBy("fecha", "desc"));
+    // SOLO LAS 3 MÁS RECIENTES
+    const q = query(collection(db, "publicaciones"), orderBy("fecha", "desc"), limit(3));
     const querySnapshot = await getDocs(q);
 
     container.innerHTML = '';
@@ -262,7 +263,7 @@ async function cargarPublicacionesFirebase() {
       container.appendChild(tarjeta);
     });
 
-    console.log("✅ Publicaciones cargadas desde Firebase");
+    console.log(`✅ Mostradas las ${querySnapshot.size} publicaciones más recientes`);
     
   } catch (error) {
     console.error("❌ Error:", error);
