@@ -52,11 +52,106 @@
     </div>
   </section>
 
-  <section class="hero2">
+ <section class="hero2">
   <div class="imagenes-container" id="productos-container">
     <p>Cargando productos...</p>
   </div>
 </section>
+
+<script type="module">
+  // === IMPORTS FIREBASE ===
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+  import { getFirestore, collection, getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
+  // === CONFIGURACIÓN FIREBASE (la misma que tienes) ===
+  const firebaseConfig = {
+    apiKey: "AIzaSyDEpsW78ANRpnTQ9fZkwPQBUhYZVP2xw18",
+    authDomain: "caleufuyerbamate.firebaseapp.com",
+    databaseURL: "https://caleufuyerbamate-default-rtdb.firebaseio.com",
+    projectId: "caleufuyerbamate",
+    storageBucket: "caleufuyerbamate.firebasestorage.app",
+    messagingSenderId: "690153593667",
+    appId: "1:690153593667:web:b5f9d936f59f3c6336edf6"
+  };
+
+  // === INICIALIZACIÓN ===
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // === CARGAR PRODUCTOS DESDE FIREBASE ===
+  try {
+    console.log('🔥 Cargando productos desde Firebase...');
+    
+    // Consultar la colección "productos" - solo productos activos
+    const q = query(
+      collection(db, "productos"), 
+      where("activo", "==", true),
+      orderBy("fechaCreacion", "desc")
+    );
+    
+    const querySnapshot = await getDocs(q);
+    const container = document.getElementById("productos-container");
+    
+    if (querySnapshot.empty) {
+      container.innerHTML = "<p>No hay productos disponibles</p>";
+    } else {
+      container.innerHTML = ""; // Limpia el "Cargando..."
+      
+      querySnapshot.forEach((doc) => {
+        const producto = doc.data();
+        
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "tarjeta";
+        
+        tarjeta.innerHTML = `
+          <div class="tarjeta-inner">
+            <div class="tarjeta-front">
+              <img src="${producto.imagenFrente}" alt="Frente" />
+              <div class="contenido-front">
+                <h3>${producto.tituloFrente}</h3>
+              </div> 
+            </div>
+            <div class="tarjeta-back">
+              <img class="fondo" src="${producto.imagenReverso}" alt="Reverso" />
+              <div class="contenido">
+                <h3>${producto.tituloDetras}</h3>
+                <p>${producto.subtituloDetras}</p>
+                <button class="boton">${producto.textoBoton}</button>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        container.appendChild(tarjeta);
+      });
+    }
+    
+    console.log('✅ Productos cargados correctamente');
+    
+  } catch (error) {
+    console.error('❌ Error al cargar productos:', error);
+    document.getElementById("productos-container").innerHTML = 
+      "<p>Error al cargar productos</p>";
+  }
+</script>
+
+<script>
+// Función para detectar si el elemento está en viewport
+function inViewObserver(className) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+      }
+    });
+  }, {
+    threshold: 0.60
+  });
+  document.querySelectorAll('.' + className).forEach(el => observer.observe(el));
+}
+inViewObserver('fade-up-on-scroll');
+inViewObserver('fade-zoom-on-scroll');
+</script>
 
   <section id="about" class="about-section">
   <div class="about-content">
@@ -123,44 +218,7 @@
   </script>
   
   
-<script>
-  fetch("https://script.google.com/macros/s/AKfycbysr3cf0RpAqyVasrNcz8wimIjPTXmxnj8bLgixqNM28So5Y2hR4JalsjPRROpdq-qd0g/exec")
-    .then(res => res.json())
-    .then(lista => {
-      const container = document.getElementById("productos-container");
-      container.innerHTML = ""; // Limpia el "Cargando..."
 
-      lista.forEach(fila => {
-        // Validación mínima por si alguna fila viene vacía o incompleta
-        if (fila.length < 6) return;
-
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "tarjeta";
-        tarjeta.innerHTML = `
-          <div class="tarjeta-inner">
-            <div class="tarjeta-front">
-              <img src="${fila[0]}" alt="Frente" />
-			  <div class="contenido-front"><h3>${fila[2]}</h3>
-			  </div> 
-            </div>
-            <div class="tarjeta-back">
-              <img class="fondo" src="${fila[1]}" alt="Reverso" />
-              <div class="contenido">
-                <h3>${fila[3]}</h3>
-                <p>${fila[4]}</p>
-                <button class="boton">${fila[5]}</button>
-              </div>
-            </div>
-          </div>
-        `;
-        container.appendChild(tarjeta);
-      });
-    })
-    .catch(err => {
-      document.getElementById("productos-container").innerHTML = "<p>Error al cargar productos</p>";
-      console.error(err);
-    });
-</script>
 <script>
 // Función para detectar si el elemento está en viewport
 function inViewObserver(className) {
