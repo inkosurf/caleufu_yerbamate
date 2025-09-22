@@ -39,10 +39,7 @@ img {
   align-items: stretch;
   justify-content: space-between;
 
-  background-image: url('../img/fondopareja.png'); /* tu ruta */
-  background-size: contain; /* o cover, según efecto */
-  background-position: bottom center;
-  background-repeat: no-repeat;
+  
 }
 
  
@@ -144,6 +141,10 @@ header {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+	background-image: url('../img/fondopareja.png'); /* tu ruta */
+  background-size: contain; /* o cover, según efecto */
+  background-position: bottom center;
+  background-repeat: no-repeat;
 }
 
 .logo {
