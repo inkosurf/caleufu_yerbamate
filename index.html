@@ -367,7 +367,7 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
   import { getFirestore, collection, getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
 
-  // === CONFIGURACIÓN FIREBASE (la misma que tienes) ===
+  // === CONFIGURACIÓN FIREBASE ===
   const firebaseConfig = {
     apiKey: "AIzaSyDEpsW78ANRpnTQ9fZkwPQBUhYZVP2xw18",
     authDomain: "caleufuyerbamate.firebaseapp.com",
@@ -386,7 +386,6 @@
   try {
     console.log('🔥 Cargando productos desde Firebase...');
     
-    // Consultar la colección "productos" - solo productos activos
     const q = query(
       collection(db, "productos"), 
       where("activo", "==", true),
@@ -399,10 +398,16 @@
     if (querySnapshot.empty) {
       container.innerHTML = "<p>No hay productos disponibles</p>";
     } else {
-      container.innerHTML = ""; // Limpia el "Cargando..."
+      container.innerHTML = "";
       
       querySnapshot.forEach((doc) => {
         const producto = doc.data();
+        
+        // 🔹 WHATSAPP - ÚNICA LÍNEA NUEVA
+        const numeroWhatsApp = "5492944226740027";
+        const mensaje = `Hola! Me interesa consultar sobre: *${producto.tituloFrente}*`;
+        const mensajeCodificado = encodeURIComponent(mensaje);
+        const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`;
         
         const tarjeta = document.createElement("div");
         tarjeta.className = "tarjeta";
@@ -420,7 +425,9 @@
               <div class="contenido">
                 <h3>${producto.tituloDetras}</h3>
                 <p>${producto.subtituloDetras}</p>
-                <button class="boton">${producto.textoBoton}</button>
+                <a href="${linkWhatsApp}" target="_blank" style="text-decoration: none;">
+                  <button class="boton">${producto.textoBoton}</button>
+                </a>
               </div>
             </div>
           </div>
@@ -430,7 +437,7 @@
       });
     }
     
-    console.log('✅ Productos cargados correctamente');
+    console.log('✅ Productos cargados con WhatsApp');
     
   } catch (error) {
     console.error('❌ Error al cargar productos:', error);
