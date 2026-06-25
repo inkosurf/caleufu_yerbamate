@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Caleufu Yerbas Agroecologicas</title>
+  <meta name="description" content="Caleufu - Yerbas mate orgánicas y agroecológicas de productores de Misiones. Estacionamiento natural, precios accesibles y envíos a todo el país.">
   <link rel="stylesheet" href="assets/css/style4.css">
  
   <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Roboto+Slab&family=Noto+Sans&display=swap" rel="stylesheet">
@@ -327,12 +328,12 @@
         <span></span>
       </div>
       <nav class="nav">
-        <a href="#">Inicio</a>
-        <a href="#">Nosotros</a>
-        <a href="#">Servicios</a>
-        <a href="#">Contacto</a>
+        <a href="#hero-carousel">Inicio</a>
+        <a href="#about">Nosotros</a>
+        <a href="#productos-container">Productos</a>
+        <a href="#contacto">Contacto</a>
       </nav>
-      <button class="btn">Acción</button>
+      <a href="https://wa.me/5492944226740027" target="_blank" class="btn btn-whatsapp">📱 Consultar</a>
     </div>
   </header>
 <section class="hero-carousel">
@@ -403,7 +404,7 @@
       querySnapshot.forEach((doc) => {
         const producto = doc.data();
         
-        // 🔹 WHATSAPP - ÚNICA LÍNEA NUEVA
+        // WHATSAPP
         const numeroWhatsApp = "5492944226740027";
         const mensaje = `Hola! Me interesa consultar sobre: *${producto.tituloFrente}*`;
         const mensajeCodificado = encodeURIComponent(mensaje);
@@ -499,10 +500,10 @@ inViewObserver('fade-zoom-on-scroll');
             </div>
 
             <div class="about-icon-item">
-              <div class="icon">🏪</div>
+              <div class="icon">🌿</div>
               <div>
-                <h4>----</h4>
-                <p>------</p>
+                <h4>Sin intermediarios</h4>
+                <p>Directo del productor a tu mesa</p>
               </div>
             </div>
           </div>
@@ -536,12 +537,12 @@ inViewObserver('fade-zoom-on-scroll');
                 <div class="footer-section">
                     <h3>📞 Contacto</h3>
                     <div class="contact-info">
-                        <a href="https://wa.me/5491123456789" class="whatsapp-link" target="_blank">
+                        <a href="https://wa.me/5492944226740027" class="whatsapp-link" target="_blank">
                             <div class="contact-item">
                                 <div class="contact-icon">📱</div>
                                 <div class="contact-details">
                                     <div class="contact-label">WhatsApp</div>
-                                    <div class="contact-value">+54 911 2345 6789</div>
+                                    <div class="contact-value">+54 9 2944 226740</div>
                                 </div>
                             </div>
                         </a>
@@ -595,7 +596,7 @@ inViewObserver('fade-zoom-on-scroll');
                     <span>Caleufu - Yerba Mate Orgánica</span>
                 </div>
                 <div class="footer-year">
-                    © 2025 Todos los derechos reservados
+                    © 2026 Todos los derechos reservados
                 </div>
             </div>
         </div>
@@ -615,25 +616,6 @@ inViewObserver('fade-zoom-on-scroll');
   
   
 
-<script>
-// Función para detectar si el elemento está en viewport
-function inViewObserver(className) {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-      }
-    });
-  }, {
-    threshold: 0.60
-  });
-
-  document.querySelectorAll('.' + className).forEach(el => observer.observe(el));
-}
-
-inViewObserver('fade-up-on-scroll');
-inViewObserver('fade-zoom-on-scroll');
-</script>
 <script type="module">
 // === IMPORTS FIREBASE ===
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
